@@ -1,0 +1,404 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/tasks": {
+      "post": {
+        "operationId": "TasksController_createTask",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTaskDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateTaskDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Добавить задачу",
+        "tags": [
+          "TAK BCE"
+        ]
+      },
+      "get": {
+        "operationId": "TasksController_returnTasks",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ReturnTaskDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Вернуть все задачи",
+        "tags": [
+          "TAK BCE"
+        ]
+      },
+      "delete": {
+        "operationId": "TasksController_deleteAll",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteResult"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Удалить все задачи",
+        "tags": [
+          "TAK BCE"
+        ]
+      }
+    },
+    "/tasks/types": {
+      "post": {
+        "operationId": "TasksController_createType",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTypeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateTypeDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Добавить тип задачи",
+        "tags": [
+          "TAK BCE"
+        ]
+      },
+      "get": {
+        "operationId": "TasksController_returnTypes",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ReturnTypeDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Вернуть все типы задач",
+        "tags": [
+          "TAK BCE"
+        ]
+      }
+    },
+    "/tasks/{id}": {
+      "put": {
+        "operationId": "TasksController_updateTask",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTaskDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateTaskDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Изменить задачу",
+        "tags": [
+          "TAK BCE"
+        ]
+      },
+      "delete": {
+        "operationId": "TasksController_deleteTask",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteResult"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Удалить задачу",
+        "tags": [
+          "TAK BCE"
+        ]
+      }
+    },
+    "/tasks/types/{id}": {
+      "delete": {
+        "operationId": "TasksController_deleteType",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteResult"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Удалить тип задачи",
+        "tags": [
+          "TAK BCE"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Hookster Manager",
+    "description": "Manager for Hooker",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "CreateTaskDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Название eng-rus",
+            "example": "Создать Hookster"
+          },
+          "description": {
+            "type": "string",
+            "description": "Описание eng-rus",
+            "example": "Найти разработчиков, кинуть их"
+          },
+          "type": {
+            "type": "string",
+            "description": "Тип, к которому относится задача rus-eng",
+            "example": "Programming"
+          },
+          "priority": {
+            "type": "number",
+            "description": "Приоритет от 1 до 5 включительно",
+            "example": 1
+          },
+          "deadline": {
+            "type": "string",
+            "description": "Дата, формат гггг-мм-дд",
+            "example": "2023-10-25"
+          }
+        },
+        "required": [
+          "title",
+          "description",
+          "type",
+          "priority",
+          "deadline"
+        ]
+      },
+      "CreateTypeDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Название eng-rus",
+            "example": "Программирование"
+          }
+        },
+        "required": [
+          "title"
+        ]
+      },
+      "ReturnTaskDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "Идентификатор задачи",
+            "example": 1
+          },
+          "title": {
+            "type": "string",
+            "description": "Название eng-rus",
+            "example": "Создать Hookster"
+          },
+          "description": {
+            "type": "string",
+            "description": "Описание eng-rus",
+            "example": "Найти разработчиков, кинуть их"
+          },
+          "type": {
+            "type": "string",
+            "description": "Тип, к которому относится задача rus-eng",
+            "example": "Programming"
+          },
+          "priority": {
+            "type": "number",
+            "description": "Приоритет от 1 до 5 включительно",
+            "example": 1
+          },
+          "deadline": {
+            "type": "string",
+            "description": "Дата, формат гггг-мм-дд",
+            "example": "2023-10-25"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "description",
+          "type",
+          "priority",
+          "deadline"
+        ]
+      },
+      "ReturnTypeDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "Идентификатор типа задачи",
+            "example": 1
+          },
+          "title": {
+            "type": "string",
+            "description": "Название типа задачи",
+            "example": "Программирование"
+          }
+        },
+        "required": [
+          "id",
+          "title"
+        ]
+      },
+      "UpdateTaskDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Название eng-rus",
+            "example": "Создать Hookster"
+          },
+          "description": {
+            "type": "string",
+            "description": "Описание eng-rus",
+            "example": "Найти разработчиков, кинуть их"
+          },
+          "type": {
+            "type": "string",
+            "description": "Тип, к которому относится задача rus-eng",
+            "example": "Programming"
+          },
+          "priority": {
+            "type": "number",
+            "description": "Приоритет от 1 до 5 включительно",
+            "example": 1
+          },
+          "deadline": {
+            "type": "string",
+            "description": "Дата, формат гггг-мм-дд",
+            "example": "2023-10-25"
+          }
+        },
+        "required": [
+          "title",
+          "description",
+          "type",
+          "priority",
+          "deadline"
+        ]
+      },
+      "DeleteResult": {
+        "type": "object",
+        "properties": {}
+      }
+    }
+  }
+}
