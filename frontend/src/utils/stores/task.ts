@@ -81,7 +81,7 @@ export const useTaskStore = create<TaskStore>((set) => ({
     try {
       set({ loading: true, error: null });
 
-      const res = await fetch(`http://localhost:5001  /tasks/${id}`, {
+      const res = await fetch(`http://localhost:5001/tasks/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updated),

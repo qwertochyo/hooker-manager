@@ -10,17 +10,18 @@ interface Props {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
   onSubmit: (e: React.SyntheticEvent<HTMLFormElement>) => void;
+  isEditing: boolean;
 }
 
-export const CreateTaskForm = ({ form, onChange, onSubmit }: Props) => {
-  const { setIsModal } = useModalStore();
+export const TaskForm = ({ form, onChange, onSubmit, isEditing }: Props) => {
+  const { close } = useModalStore();
 
   return (
     <div className="bg-background w-[40%] min-w-80 mx-auto border px-4 py-6 relative">
       <div className="text-xl text-center mb-3">
-        <p>Create task</p>
+        <p>{isEditing ? "Update" : "Create"} task</p>
         <Button
-          onClick={() => setIsModal(false)}
+          onClick={() => close()}
           variant="ghost"
           size="icon"
           className="rounded-full absolute top-6 right-4"
@@ -34,7 +35,7 @@ export const CreateTaskForm = ({ form, onChange, onSubmit }: Props) => {
           <Input name="title" value={form.title} onChange={onChange} />
         </label>
         <label>
-          Give your description, <span className="uppercase">bitch</span>
+          {isEditing ? "Change" : "Give"} your description, <span className="uppercase">bitch</span>
           <Textarea
             name="description"
             value={form.description}
@@ -54,9 +55,7 @@ export const CreateTaskForm = ({ form, onChange, onSubmit }: Props) => {
           Deadline
           <Input name="deadline" value={form.deadline} onChange={onChange} />
         </label>
-        <Button type="submit">
-          Create task
-        </Button>
+        <Button type="submit">{isEditing ? "Update" : "Create"} task</Button>
       </form>
     </div>
   );

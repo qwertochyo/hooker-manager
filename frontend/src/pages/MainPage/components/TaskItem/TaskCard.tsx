@@ -2,6 +2,7 @@ import {
   CalendarDays,
   ChartNoAxesColumnIncreasing,
   SquarePen,
+  Trash,
 } from 'lucide-react';
 
 import { Button } from '../../../../components/ui';
@@ -9,10 +10,11 @@ import type { Task } from '../../../../types';
 
 interface Props {
   task: Task;
-  onClick: () => void;
+  onDelete: () => void;
+  onEdit: () => void;
 }
 
-export const TaskCard = ({ task, onClick }: Props) => {
+export const TaskCard = ({ task, onDelete, onEdit }: Props) => {
   return (
     <div className="flex flex-col self-start gap-5 w-[30%] min-w-70 border p-3">
       <div className="flex justify-between items-center gap-2">
@@ -39,11 +41,14 @@ export const TaskCard = ({ task, onClick }: Props) => {
         {task.deadline}
       </div>
       <div className="flex justify-between gap-2">
-        <Button onClick={onClick} variant="complete" className="flex-1">
-          Done
+        <Button onClick={onDelete} variant="complete" className="flex-1">
+          Complete
         </Button>
-        <Button size="icon" variant="ghost">
+        <Button onClick={onEdit} size="icon" variant="ghost">
           <SquarePen />
+        </Button>
+        <Button onClick={onDelete} size="icon" variant="ghost">
+          <Trash />
         </Button>
       </div>
     </div>

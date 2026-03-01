@@ -9,7 +9,7 @@ const buttonVariants = cva('block cursor-pointer', {
       default: 'bg-primary hover:bg-primary-hover',
       complete: 'bg-complete hover:bg-complete-hover',
       round: 'border rounded-full',
-      ghost: 'transparent hover:bg-black/10',
+      ghost: 'transparent hover:bg-ghost-hover',
     },
     size: {
       default: 'px-4 py-2 text-base',
