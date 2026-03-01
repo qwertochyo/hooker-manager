@@ -8,7 +8,7 @@ interface Props {
 
 export const Layout = ({ children }: Props) => {
   return (
-    <div>
+    <div className='px-[10%]'>
       <Header />
       <main>{children}</main>
     </div>

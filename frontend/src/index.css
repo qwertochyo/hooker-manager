@@ -6,10 +6,17 @@
   --background: #F5F5F5;
   --foreground: #000000;
 
-  --primary: #2563EB;
+  --primary: #60A5FA;
   --primary-foreground: #FFFFFF;
+  --primary-hover: #3B82F6;
+
+  --complete: #22C55E;
+  --complete-foreground: #FFFFFF;
+  --complete-hover: #16A34A;
 
   --border: #000000;
+  --border-hover: #2563EB;
+
   --ring: #2563EB;
 
   --font-sans: "Bruno Ace", sans-serif;
@@ -19,10 +26,17 @@ html.dark {
   --background: #1E1E1E;
   --foreground: #FFFFFF;
 
-  --primary: #3B82F6;
+  --primary: #1D4ED8;
   --primary-foreground: #FFFFFF;
+  --primary-hover: #2563EB;
+
+  --complete: #16A34A;
+  --complete-foreground: #FFFFFF;
+  --complete-hover: #15803D;
 
   --border: #FFFFFF;
+  --border-hover: #3B82F6;
+
   --ring: #3B82F6;
 }
 
@@ -32,8 +46,15 @@ html.dark {
 
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+  --color-primary-hover: var(--primary-hover);
+
+  --color-complete: var(--complete);
+  --color-complete-foreground: var(--complete-foreground);
+  --color-complete-hover: var(--complete-hover);
 
   --color-border: var(--border);
+  --color-border-hover: var(--border-hover);
+
   --color-ring: var(--ring);
 
   --font-sans: var(--font-sans);
