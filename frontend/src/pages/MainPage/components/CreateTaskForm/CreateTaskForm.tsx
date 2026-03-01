@@ -1,5 +1,8 @@
+import { CircleX } from 'lucide-react';
+
 import { Button, Input, Textarea } from '../../../../components/ui';
 import type { Task } from '../../../../types';
+import { useModalStore } from '../../../../utils/stores/modal';
 
 interface Props {
   form: Omit<Task, 'id'>;
@@ -10,9 +13,21 @@ interface Props {
 }
 
 export const CreateTaskForm = ({ form, onChange, onSubmit }: Props) => {
+  const { setIsModal } = useModalStore();
+
   return (
-    <div className="w-[50%] min-w-72 mx-auto border px-4 py-6">
-      <p className="text-xl text-center mb-3">Create task</p>
+    <div className="bg-background w-[40%] min-w-80 mx-auto border px-4 py-6 relative">
+      <div className="text-xl text-center mb-3">
+        <p>Create task</p>
+        <Button
+          onClick={() => setIsModal(false)}
+          variant="ghost"
+          size="icon"
+          className="rounded-full absolute top-6 right-4"
+        >
+          <CircleX />
+        </Button>
+      </div>
       <form onSubmit={onSubmit} className="flex flex-col gap-3">
         <label>
           Task title
@@ -39,7 +54,9 @@ export const CreateTaskForm = ({ form, onChange, onSubmit }: Props) => {
           Deadline
           <Input name="deadline" value={form.deadline} onChange={onChange} />
         </label>
-        <Button type="submit">Create task</Button>
+        <Button type="submit">
+          Create task
+        </Button>
       </form>
     </div>
   );

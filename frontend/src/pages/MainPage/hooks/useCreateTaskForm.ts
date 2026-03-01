@@ -2,9 +2,11 @@ import { useState } from 'react';
 
 import type { Task } from '../../../types';
 import { useTaskStore } from '../../../utils/stores';
+import { useModalStore } from '../../../utils/stores/modal';
 
 export const useCreateTaskForm = () => {
   const { addTask } = useTaskStore();
+  const { setIsModal } = useModalStore();
 
   const [form, setForm] = useState<Omit<Task, 'id'>>({
     title: '',
@@ -20,7 +22,7 @@ export const useCreateTaskForm = () => {
     const { name, value } = e.target;
     setForm((prev) => ({
       ...prev,
-      [name]: name === "priority" ? Number(value) : value,
+      [name]: name === 'priority' ? Number(value) : value,
     }));
   };
 
@@ -28,6 +30,7 @@ export const useCreateTaskForm = () => {
     e.preventDefault();
 
     addTask(form);
+    setIsModal(false);
   };
 
   return {
