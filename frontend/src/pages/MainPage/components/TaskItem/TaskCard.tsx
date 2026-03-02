@@ -16,7 +16,7 @@ interface Props {
 
 export const TaskCard = ({ task, onDelete, onEdit }: Props) => {
   return (
-    <div className="flex flex-col self-start gap-5 w-[30%] min-w-70 border p-3">
+    <div className="flex flex-col self-start gap-5 w-full border p-3">
       <div className="flex justify-between items-center gap-2">
         <h3>
           name: <span className="uppercase">{task.title}</span>

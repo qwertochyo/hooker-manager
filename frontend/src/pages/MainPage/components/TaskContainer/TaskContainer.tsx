@@ -1,4 +1,4 @@
-import { useTaskForm } from '../../hooks/useTaskForm';
+import { useTaskForm } from '../../hooks';
 import { TaskForm } from '../TaskForm/TaskForm';
 
 export const TaskConatiner = () => {

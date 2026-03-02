@@ -2,7 +2,7 @@ import { CircleX } from 'lucide-react';
 
 import { Button, Input, Textarea } from '../../../../components/ui';
 import type { Task } from '../../../../types';
-import { useModalStore } from '../../../../utils/stores/modal';
+import { useTaskModalStore, useTypeStore } from '../../../../utils/stores';
 
 interface Props {
   form: Omit<Task, 'id'>;
@@ -14,12 +14,17 @@ interface Props {
 }
 
 export const TaskForm = ({ form, onChange, onSubmit, isEditing }: Props) => {
-  const { close } = useModalStore();
+  const { creatingTypeId, close } = useTaskModalStore();
+  const { types } = useTypeStore();
+
+  const typeName = creatingTypeId
+    ? types.find((t) => t.id === creatingTypeId)?.title
+    : (types.find((t) => t.id === form.typeId)?.title ?? '');
 
   return (
     <div className="bg-background w-[40%] min-w-80 mx-auto border px-4 py-6 relative">
       <div className="text-xl text-center mb-3">
-        <p>{isEditing ? "Update" : "Create"} task</p>
+        <p>{isEditing ? 'Update' : 'Create'} task</p>
         <Button
           onClick={() => close()}
           variant="ghost"
@@ -35,7 +40,8 @@ export const TaskForm = ({ form, onChange, onSubmit, isEditing }: Props) => {
           <Input name="title" value={form.title} onChange={onChange} />
         </label>
         <label>
-          {isEditing ? "Change" : "Give"} your description, <span className="uppercase">bitch</span>
+          {isEditing ? 'Change' : 'Give'} your description,{' '}
+          <span className="uppercase">bitch</span>
           <Textarea
             name="description"
             value={form.description}
@@ -45,7 +51,7 @@ export const TaskForm = ({ form, onChange, onSubmit, isEditing }: Props) => {
         </label>
         <label>
           Task type
-          <Input name="type" value={form.type} onChange={onChange} />
+          <Input disabled name="type" value={typeName} onChange={onChange} />
         </label>
         <label>
           Priority
@@ -55,7 +61,7 @@ export const TaskForm = ({ form, onChange, onSubmit, isEditing }: Props) => {
           Deadline
           <Input name="deadline" value={form.deadline} onChange={onChange} />
         </label>
-        <Button type="submit">{isEditing ? "Update" : "Create"} task</Button>
+        <Button type="submit">{isEditing ? 'Update' : 'Create'} task</Button>
       </form>
     </div>
   );

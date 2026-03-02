@@ -1,43 +1,46 @@
-import { SquarePlus } from 'lucide-react';
+import { CirclePlus } from 'lucide-react';
 import { useEffect } from 'react';
 
 import { Button } from '../../../../components/ui';
-import { useTaskStore } from '../../../../utils/stores';
-import { useModalStore } from '../../../../utils/stores/modal';
-import { TaskConatiner } from '../TaskContainer/TaskContainer';
-import { TaskCard } from '../TaskItem/TaskCard';
+import {
+  useTaskStore,
+  useTypeModalStore,
+  useTypeStore,
+} from '../../../../utils/stores';
+import { TaskTypeGroup } from '../TaskTypeGroup/TaskTypeGroup';
+import { TypeContainer } from '../TypeContainer/TypeContainer';
 
 export const TaskList = () => {
-  const { isModalOpen, openForCreate, openForEdit } = useModalStore();
-  const { tasks, fetchTasks, removeTask } = useTaskStore();
+  const { tasks, fetchTasks } = useTaskStore();
+  const { types, fetchTypes } = useTypeStore();
+  const { isTypeModalOpen, open } = useTypeModalStore();
 
   useEffect(() => {
     fetchTasks();
   }, [fetchTasks]);
 
+  useEffect(() => {
+    fetchTypes();
+  }, [fetchTypes]);
+
   return (
-    <div className="flex flex-col gap-3 relative">
-      <div className="flex flex-wrap gap-10 min-w-70 justify-between">
-        {tasks.map((task) => (
-          <TaskCard
-            key={task.id}
-            task={task}
-            onDelete={() => removeTask(task.id)}
-            onEdit={() => openForEdit(task)}
-          />
-        ))}
-      </div>
+    <div className="flex flex-wrap gap-3 justify-between">
+      {types.map((type) => (
+        <TaskTypeGroup key={type.id} tasks={tasks} type={type} />
+      ))}
+
       <Button
-        onClick={openForCreate}
+        onClick={open}
         variant="ghost"
-        className="flex gap-1 items-center self-start"
+        className="flex gap-1 items-center justify-center min-h-screen w-[30%]"
       >
-        <SquarePlus className="opacity-50" />
-        <span className="opacity-60">Add new task</span>
+        <CirclePlus />
+        Add new type, <span className="text-red-600 uppercase">asshole</span>
       </Button>
-      {isModalOpen && (
+
+      {isTypeModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20">
-          <TaskConatiner />
+          <TypeContainer />
         </div>
       )}
     </div>

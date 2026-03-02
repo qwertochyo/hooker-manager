@@ -32,11 +32,11 @@ html.dark {
   --primary-foreground: #FFFFFF;
   --primary-hover: #2563EB;
 
+  --ghost-hover: rgba(255, 255, 255, 0.08);
+
   --complete: #16A34A;
   --complete-foreground: #FFFFFF;
   --complete-hover: #15803D;
-
-  --ghost-hover: rgba(255, 255, 255, 0.08);
 
   --border: #FFFFFF;
   --border-hover: #3B82F6;

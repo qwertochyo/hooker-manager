@@ -11,8 +11,9 @@ interface TaskState {
 interface TaskActions {
   fetchTasks: () => Promise<void>;
   addTask: (task: Omit<Task, 'id'>) => Promise<void>;
-  removeTask: (id: number) => Promise<void>;
   updateTask: (id: number, updated: Partial<Task>) => Promise<void>;
+  removeTask: (id: number) => Promise<void>;
+  removeTasksByType: (typeId: number) => Promise<void>;
 }
 
 type TaskStore = TaskState & TaskActions;
@@ -98,4 +99,26 @@ export const useTaskStore = create<TaskStore>((set) => ({
       set({ loading: false });
     }
   },
+
+  removeTasksByType: async (typeId) => {
+    try {
+      set({ loading: true, error: null });
+  
+      const tasksToDelete = useTaskStore.getState().tasks.filter(t => t.typeId === typeId);
+  
+      await Promise.all(
+        tasksToDelete.map(t =>
+          fetch(`http://localhost:5001/tasks/${t.id}`, { method: 'DELETE' })
+        )
+      );
+  
+      set((state) => ({
+        tasks: state.tasks.filter((t) => t.typeId !== typeId),
+      }));
+    } catch (err: any) {
+      set({ error: err.message });
+    } finally {
+      set({ loading: false });
+    }
+  }
 }));
