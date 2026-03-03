@@ -1,7 +1,8 @@
 import { useState } from 'react';
 
+import { useTypeStore } from '..';
 import type { TaskType } from '../../../types';
-import { useTypeModalStore, useTypeStore } from '../../../utils/stores';
+import { useModalStore } from '../../../utils/stores';
 
 const initialFormState: Omit<TaskType, 'id'> = {
   title: '',
@@ -10,7 +11,7 @@ const initialFormState: Omit<TaskType, 'id'> = {
 export const useTypeForm = () => {
   const [form, setForm] = useState<Omit<TaskType, 'id'>>(initialFormState);
   const { addType } = useTypeStore();
-  const { close } = useTypeModalStore();
+  const { closeModal } = useModalStore();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -33,7 +34,7 @@ export const useTypeForm = () => {
     } catch (err) {
       console.log('Ошибка при создании типа', err);
     } finally {
-      close();
+      closeModal();
     }
   };
 

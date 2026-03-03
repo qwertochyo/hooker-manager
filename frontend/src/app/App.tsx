@@ -1,5 +1,6 @@
 import { Layout } from '../components/layout';
-import { MainPage } from '../pages/MainPage/MainPage';
+import { ModalRoot } from '../components/ui';
+import { MainPage } from '../pages/MainPage';
 import { Providers } from './providers';
 
 export const App = () => {
@@ -8,6 +9,7 @@ export const App = () => {
       <Layout>
         <MainPage />
       </Layout>
+      <ModalRoot />
     </Providers>
   );
 };

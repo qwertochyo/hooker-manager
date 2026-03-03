@@ -1,14 +1,11 @@
 import { MoveDown, SquarePlus, Trash } from 'lucide-react';
 
-import { Button } from '../../../../components/ui';
-import type { Task, TaskType } from '../../../../types';
-import {
-  useTaskModalStore,
-  useTaskStore,
-  useTypeStore,
-} from '../../../../utils/stores';
-import { TaskCard } from '../TaskItem/TaskCard';
-import { TaskConatiner } from '../TaskContainer/TaskContainer';
+import { Button } from '../../../components/ui';
+import { useTypeStore } from '../../../features';
+import { useTaskStore } from '../../../features/tasks';
+import type { Task, TaskType } from '../../../types';
+import { useModalStore } from '../../../utils/stores';
+import { TaskCard } from './TaskCard';
 
 interface Props {
   tasks: Task[];
@@ -17,9 +14,8 @@ interface Props {
 
 export const TaskTypeGroup = ({ tasks, type }: Props) => {
   const { removeTask } = useTaskStore();
-  const { openForCreate, openForEdit } = useTaskModalStore();
   const { removeType } = useTypeStore();
-  const { isTaskModalOpen } = useTaskModalStore();
+  const { openModal } = useModalStore();
 
   return (
     <div className="min-w-80 w-[30%]">
@@ -39,17 +35,17 @@ export const TaskTypeGroup = ({ tasks, type }: Props) => {
         </summary>
         <div className="flex flex-col gap-3 min-w-80 justify-between">
           {tasks
-            .filter((task) => task.typeId === type.id)
+            .filter((task) => Number(task.typeId) === type.id)
             .map((task) => (
               <TaskCard
                 key={task.id}
                 task={task}
                 onDelete={() => removeTask(task.id)}
-                onEdit={() => openForEdit(task)}
+                onEdit={() => openModal({ type: 'taskEdit', task: task })}
               />
             ))}
           <Button
-            onClick={() => openForCreate(type.id)}
+            onClick={() => openModal({ type: 'taskCreate', typeId: type.id })}
             variant="ghost"
             className="flex gap-1 items-center justify-center"
           >
@@ -58,11 +54,6 @@ export const TaskTypeGroup = ({ tasks, type }: Props) => {
           </Button>
         </div>
       </details>
-      {isTaskModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20">
-          <TaskConatiner />
-        </div>
-      )}
     </div>
   );
 };

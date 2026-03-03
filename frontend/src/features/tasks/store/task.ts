@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import type { Task } from '../../types';
+import type { Task } from '../../../types';
 
 interface TaskState {
   tasks: Task[];
@@ -103,15 +103,17 @@ export const useTaskStore = create<TaskStore>((set) => ({
   removeTasksByType: async (typeId) => {
     try {
       set({ loading: true, error: null });
-  
-      const tasksToDelete = useTaskStore.getState().tasks.filter(t => t.typeId === typeId);
-  
+
+      const tasksToDelete = useTaskStore
+        .getState()
+        .tasks.filter((t) => t.typeId === typeId);
+
       await Promise.all(
-        tasksToDelete.map(t =>
+        tasksToDelete.map((t) =>
           fetch(`http://localhost:5001/tasks/${t.id}`, { method: 'DELETE' })
         )
       );
-  
+
       set((state) => ({
         tasks: state.tasks.filter((t) => t.typeId !== typeId),
       }));
@@ -120,5 +122,5 @@ export const useTaskStore = create<TaskStore>((set) => ({
     } finally {
       set({ loading: false });
     }
-  }
+  },
 }));

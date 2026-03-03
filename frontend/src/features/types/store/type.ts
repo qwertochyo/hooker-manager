@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
-import type { TaskType } from '../../types';
-import { useTaskStore } from '.';
+import type { TaskType } from '../../../types';
+import { useTaskStore } from '../../tasks';
 
 interface TypeState {
   types: TaskType[];
@@ -74,5 +74,5 @@ export const useTypeStore = create<TypeStore>((set) => ({
     } finally {
       set({ loading: false });
     }
-  }
+  },
 }));

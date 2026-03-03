@@ -5,8 +5,8 @@ import {
   Trash,
 } from 'lucide-react';
 
-import { Button } from '../../../../components/ui';
-import type { Task } from '../../../../types';
+import { Button } from '../../../components/ui';
+import type { Task } from '../../../types';
 
 interface Props {
   task: Task;

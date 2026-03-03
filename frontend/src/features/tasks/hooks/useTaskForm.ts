@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 
+import { useTaskStore } from '..';
 import type { Task } from '../../../types';
-import { useTaskModalStore, useTaskStore } from '../../../utils/stores';
+import { useModalStore } from '../../../utils/stores';
 
 const initialFormState: Omit<Task, 'id'> = {
   title: '',
@@ -11,23 +12,28 @@ const initialFormState: Omit<Task, 'id'> = {
   deadline: '',
 };
 
-export const useTaskForm = () => {
+interface Props {
+  initialTask?: Task;
+  typeId?: number;
+}
+
+export const useTaskForm = ({ initialTask, typeId }: Props = {}) => {
   const { addTask, updateTask } = useTaskStore();
-  const { close, editingTask, creatingTypeId } = useTaskModalStore();
+  const { closeModal } = useModalStore();
 
   const [form, setForm] = useState<Omit<Task, 'id'>>({
     ...initialFormState,
-    typeId: creatingTypeId,
+    typeId: typeId ?? null,
   });
 
   useEffect(() => {
-    if (editingTask) {
-      const { id, ...rest } = editingTask;
+    if (initialTask) {
+      const { id, ...rest } = initialTask;
       setForm(rest);
     } else {
-      setForm({ ...initialFormState, typeId: creatingTypeId });
+      setForm({ ...initialFormState, typeId: typeId ?? null });
     }
-  }, [editingTask, creatingTypeId]);
+  }, [initialTask, typeId]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -48,15 +54,15 @@ export const useTaskForm = () => {
     e.preventDefault();
 
     try {
-      if (editingTask) {
-        await updateTask(editingTask.id, form);
+      if (initialTask) {
+        await updateTask(initialTask.id, form);
       } else {
         await addTask(form);
       }
     } catch (error) {
       console.log('Ошибка сохранения задачи', error);
     } finally {
-      close();
+      closeModal();
     }
   };
 
@@ -64,6 +70,6 @@ export const useTaskForm = () => {
     form,
     handleChange,
     handleSubmit,
-    isEditing: Boolean(editingTask),
+    isEditing: Boolean(initialTask),
   };
 };
